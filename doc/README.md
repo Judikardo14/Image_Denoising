@@ -304,7 +304,7 @@ Ce projet est développé à des fins pédagogiques dans le cadre du cours d'Out
 ## 🤝 Contributions
 
 Pour toute question ou suggestion:
-- Email: [Insérer email du groupe]
+- Email: judikardo@gmail.com
 - Superviseur: Dr. AGOSSOU Carlos
 
 ---
