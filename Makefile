@@ -8,14 +8,15 @@ CC = gcc
 TARGET = image_denoise
 
 # Fichiers sources
-SRCS = main.c image.c filters.c mkl_ops.c io.c
-OBJS = $(SRCS:.c=.o)
+SRCS = src/main.c src/image.c src/filters.c src/mkl_ops.c src/io.c
+OBJDIR = obj
+OBJS = $(SRCS:src/%.c=$(OBJDIR)/%.o)
 
 # Headers
-HEADERS = image.h filters.h mkl_ops.h io.h
+HEADERS = src/image.h src/filters.h src/mkl_ops.h src/io.h
 
 # Options de compilation
-CFLAGS = -O3 -Wall -Wextra -std=c11
+CFLAGS = -O3 -Wall -Wextra -std=c11 -I. -Isrc
 CFLAGS += -fopenmp  # Support OpenMP pour parallélisme
 
 # Chemins Intel MKL
@@ -50,11 +51,13 @@ stb_headers:
 # Compilation de l'exécutable
 $(TARGET): $(OBJS)
 	@echo "Édition des liens avec Intel MKL..."
-	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
-	@echo "Compilation terminée: $(TARGET)"
+	$(CC) $(OBJS) -o bin/$(TARGET) $(LDFLAGS)
+	@echo "Compilation terminée: bin/$(TARGET)"
 
 # Règles de compilation des fichiers objets
-%.o: %.c $(HEADERS)
+
+$(OBJDIR)/%.o: src/%.c $(HEADERS)
+	@mkdir -p $(OBJDIR)
 	@echo "Compilation de $<..."
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -70,8 +73,8 @@ test_image: $(TARGET)
 
 # Nettoyage
 clean:
-	rm -f $(OBJS) $(TARGET)
-	rm -f output_*.png
+	rm -f $(OBJDIR)/*.o bin/$(TARGET)
+	rm -f data/output_*.png
 
 # Nettoyage complet (inclut les headers stb)
 distclean: clean

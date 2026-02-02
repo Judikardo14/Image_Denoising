@@ -1,0 +1,21 @@
+# Fichiers objets et binaires
+obj/
+bin/
+*.o
+
+# Images générées
+*.png
+*.jpg
+*.jpeg
+data/output_*.png
+
+# Fichiers temporaires
+*~
+*.swp
+
+# Fichiers de log
+*.log
+
+# Fichiers de configuration d'éditeur
+.vscode/
+.idea/
